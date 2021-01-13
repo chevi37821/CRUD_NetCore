@@ -1,0 +1,88 @@
+﻿@model IEnumerable<CRUDNetCore.Models.Libro>
+@{
+    ViewData["Title"] = "Index2";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <!--esto se ejecutara solo si el tempdata tiene mensaje y se agragega el boton para cerrar esta ventanita-->
+    @if (TempData["mensaje"] != null)
+    {
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+
+            @TempData["mensaje"]
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+    <div class="row">
+        @*creamos fila*@
+
+        <div class="col-sm-6">
+            @*Creamos columna de 6 espacios de 12*@
+
+            <h3>Lista de Libros</h3>
+
+        </div>
+
+        <div class="col-sm-6">
+
+            <a class="btn btn-success d-block" asp-action="Create" asp-controller="Libros">Agregar Nuevo Libro</a>
+        </div>
+
+    </div>
+
+    <div class="row">
+        @if (Model.Count() > 0)@*si en el modelo hay un por lo menos un registro *@
+        {
+            <table class="table table-bordered table-striped">
+                @*en esta tabla vamos a acceder al titulo del libro*@
+                <thead>
+                    <tr>
+                        <td>@Html.DisplayNameFor(m => m.Id)    </td>
+                        <td>@Html.DisplayNameFor(m => m.Titulo)    </td>
+                        <td>@Html.DisplayNameFor(m => m.Descripcion)  </td>
+                        <td>@Html.DisplayNameFor(m => m.FechaLanzamiento)    </td>
+                        <td>@Html.DisplayNameFor(m => m.Autor)    </td>
+                        <td>@Html.DisplayNameFor(m => m.Precio)    </td>
+                        <td>Acciones</td> @*esta columna es para los botones de edita y eliminar *@
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @*en este Tbody vamos a recorrer todos los registros*@
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Id    </td> @*se llama la variable creada donde vamos a llevar todo el contenido // invocar todos los datos*@
+                            <td>@item.Titulo    </td>
+                            <td> @item.Descripcion </td>
+                            <td>@item.FechaLanzamiento    </td>
+                            <td> @item.Autor </td>
+                            <td> @item.Precio  </td>
+                            <td>
+
+                                <a asp-controller="Libros" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Editar</a>
+                                <a asp-controller="Libros" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Eliminar</a>
+
+
+                            </td>
+                        </tr>
+
+                    }
+
+                </tbody>
+            </table>
+
+        }
+        else
+        {
+            <p>No existe El registro</p>
+        }
+
+
+    </div>
+
+</div>
+
